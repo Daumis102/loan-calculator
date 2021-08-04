@@ -7,16 +7,16 @@
 
     <div class="form-group">
         <label for="monthlyIncome">Monthly Income</label>
-        <input formControlName="monthlyIncome" id="monthlyIncome" type="number" class="form-control">
+        <input formControlName="monthlyIncome" formNumber id="monthlyIncome" type="text" class="form-control">
 
         <div *ngIf="monthlyIncome?.touched && monthlyIncome?.invalid" class="alert alert-danger">
-            <div *ngIf="monthlyIncome?.errors?.required">Monthly income is required.</div>
+            <div *ngIf="monthlyIncome?.errors?.required">Please specify the monthly income.</div>
         </div>
     </div>
 
     <div class="form-group">
         <label for="requestedAmount">Amount</label>
-        <input formControlName="requestedAmount" id="requestedAmount" type="number" class="form-control">
+        <input formControlName="requestedAmount" formNumber  id="requestedAmount" type="text" class="form-control">
         <div *ngIf="requestedAmount?.touched && requestedAmount?.invalid" class="alert alert-danger">
             <div *ngIf="requestedAmount?.errors?.required">Please specify the loan amount.</div>
         </div>
@@ -24,7 +24,7 @@
 
     <div class="form-group">
         <label for="loanTerm">Term</label>
-        <input formControlName="loanTerm" id="loanTerm" type="number" class="form-control">
+        <input formControlName="loanTerm" (keypress)="checkIfNumber($event)" id="loanTerm" type="text" class="form-control">
         <div *ngIf="loanTerm?.touched && loanTerm?.invalid" class="alert alert-danger">
             <div *ngIf="loanTerm?.errors?.required">Please specify the loan term.</div>
         </div>
