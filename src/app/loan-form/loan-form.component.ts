@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { LoanCalculatorBackend } from '../services/loan-calculator-backend.service';
 import { SelectorValidators } from './selector.validators';
 import { NumberValidator } from './number.validator';
+import { AppError } from '../common/app-error';
+import { BadInputError } from '../common/bad-input-error';
 
 
 @Component({
@@ -33,9 +35,15 @@ export class LoanFormComponent implements OnInit {
 
   submit(){
     if(this.loanForm.valid){
-      let data = new FormData();
-      //data.append("monthlyIncome", )
-      this.backend.calculateLoan(this.loanForm.value);
+      this.backend.calculateLoan(this.loanForm.value).subscribe(
+        response => {
+          console.log(response);
+        },
+        (error: AppError) => {
+          if (error instanceof BadInputError) {
+          } else throw error; 
+        }
+      );
     }
   }
 

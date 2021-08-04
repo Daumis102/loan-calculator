@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -11,6 +11,7 @@ import { TermPipe } from './pipes/term.pipe';
 import { FormatedCurrencyPipe } from './pipes/formated-currency.pipe';
 import { NumberDirective } from './directives/number.directive';
 import { CurrencyDirective } from './directives/currency.directive';
+import { AppErrorHandler } from './common/app-error-handler';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { CurrencyDirective } from './directives/currency.directive';
   providers: [
     TermPipe,
     FormatedCurrencyPipe,
+    { provide: ErrorHandler, useClass: AppErrorHandler },
   ],
   bootstrap: [AppComponent]
 })

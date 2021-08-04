@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs/internal/observable/throwError';
 import { catchError } from 'rxjs/operators';
@@ -16,12 +16,17 @@ export class LoanCalculatorBackend {
   private url = 'https://homework.fdp.workers.dev/';
   constructor(private http: HttpClient) { }
 
-  calculateLoan(loanData : FormData) {
+  calculateLoan(loanData : object) {
     let apiKey = environment.apiKey;
-    loanData.append("X-API-KEY", apiKey);
-    console.log(loanData);
-    // return this.http.post(this.url, JSON.stringify(loanData))
-    //   .pipe(catchError(this.errorHandler));
+
+    const headers = new HttpHeaders({
+      'Content-type': 'application/json',
+      "X-API-KEY" : "swb-222222",
+      "authorization": "X-API-KEY swb-222222"
+    });
+    
+    return this.http.post(this.url, JSON.stringify(loanData), {"headers":headers})
+      .pipe(catchError(this.errorHandler));
   }
 
 
