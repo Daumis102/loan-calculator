@@ -19,7 +19,7 @@ export class LoanFormComponent implements OnInit {
   constructor(private backend : LoanCalculatorBackend, fb : FormBuilder) {
     this.loanForm = fb.group({
       monthlyIncome:['', [Validators.required, NumberSizeValidator.minValue(500000)]],
-      requestedAmount:['', Validators.required, NumberSizeValidator.minValue(20000000)],
+      requestedAmount:['', [Validators.required, NumberSizeValidator.minValue(20000000)]],
       loanTerm:['', [Validators.required, NumberSizeValidator.minValue(36), NumberSizeValidator.maxValue(360)]],
       children:['', [Validators.required, SelectorValidators.mustBeSelected]],
       coapplicant:['',  [Validators.required, SelectorValidators.mustBeSelected]],

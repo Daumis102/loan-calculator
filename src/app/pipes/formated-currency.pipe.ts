@@ -7,8 +7,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatedCurrencyPipe implements PipeTransform{
 
-  transform(value: string, ...args: unknown[]): unknown {
-    let withoutSpaces = value.replace(/\s/g, "");
+  transform(value: any, ...args: unknown[]): unknown {
+    let withoutSpaces = value.toString().replace(/\s/g, "");
     let num = parseFloat(withoutSpaces);
     if(isNaN(num)){
       return "";

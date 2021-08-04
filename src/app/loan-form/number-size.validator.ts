@@ -2,18 +2,18 @@ import {AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export class NumberSizeValidator {
 
-    static maxValue(maxValue: number) : ValidatorFn {
+    static maxValue(max: number) : ValidatorFn {
         return (control: AbstractControl) : ValidationErrors | null => {
-            return control.value > maxValue ?
-                 {"maxValue": maxValue} : null;
+            return control.value > max ?
+                 {maxValue: {"maxValue" : max}} : null;
         
         }
     }
 
-    static minValue(minValue: number) : ValidatorFn {
+    static minValue(min: number) : ValidatorFn {
         return (control: AbstractControl) : ValidationErrors | null => {
-            return control.value > minValue ?
-                 {"minValue": minValue} : null;
+            return control.value < min ?
+                 {minValue: {"minValue" : min}} : null;
         
         }
     }

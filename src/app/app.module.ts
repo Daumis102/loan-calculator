@@ -17,6 +17,7 @@ import { CurrencyDirective } from './directives/currency.directive';
     LoanFormComponent,
     NumberDirective,
     CurrencyDirective,
+    FormatedCurrencyPipe,
   ],
   imports: [
     BrowserModule,
