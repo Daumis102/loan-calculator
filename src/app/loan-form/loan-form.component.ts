@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoanCalculatorBackend } from '../services/loan-calculator-backend.service';
+import { SelectorValidators } from './selector.validators';
 
 @Component({
   selector: 'loan-form',
@@ -14,15 +15,14 @@ export class LoanFormComponent implements OnInit {
   childrenOptions: any;
   constructor(private backend : LoanCalculatorBackend, fb : FormBuilder) {
     this.loanForm = fb.group({
-      monthlyIncome:[],
-      requestedAmount:[],
-      loanTerm:[],
-      children:[],
-      coapplicants:[]
+      monthlyIncome:['', Validators.required],
+      requestedAmount:['', Validators.required],
+      loanTerm:['', Validators.required],
+      children:['', [Validators.required, SelectorValidators.mustBeSelected]],
+      coapplicant:['',  [Validators.required, SelectorValidators.mustBeSelected]],
     })
 
     this.coapplicantOptions = this.backend.getCoapplicantOptions();
-    console.log(this.coapplicantOptions);
     this.childrenOptions = this.backend.getChildrenOptions();
    }
   
@@ -31,7 +31,7 @@ export class LoanFormComponent implements OnInit {
   }
 
   submit(){
-
+    console.log(this.loanForm);
   }
 
   get monthlyIncome(){
@@ -50,7 +50,7 @@ export class LoanFormComponent implements OnInit {
     return this.loanForm.get('children');
   }
 
-  get coapplicants(){
+  get coapplicant(){
     return this.loanForm.get('coapplicants');
   }
 
