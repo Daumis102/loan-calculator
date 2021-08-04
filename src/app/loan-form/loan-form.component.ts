@@ -51,7 +51,7 @@ export class LoanFormComponent implements OnInit {
   }
 
   get coapplicant(){
-    return this.loanForm.get('coapplicants');
+    return this.loanForm.get('coapplicant');
   }
 
 }
