@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoanCalculatorBackend } from '../services/loan-calculator-backend.service';
 import { SelectorValidators } from './selector.validators';
-import { FormatedCurrencyPipe } from '../pipes/formated-currency.pipe';
+import { NumberSizeValidator } from './number-size.validator';
+
 
 @Component({
   selector: 'loan-form',
@@ -17,9 +18,9 @@ export class LoanFormComponent implements OnInit {
 
   constructor(private backend : LoanCalculatorBackend, fb : FormBuilder) {
     this.loanForm = fb.group({
-      monthlyIncome:['', Validators.required],
-      requestedAmount:['', Validators.required],
-      loanTerm:['', Validators.required],
+      monthlyIncome:['', [Validators.required, NumberSizeValidator.minValue(500000)]],
+      requestedAmount:['', Validators.required, NumberSizeValidator.minValue(20000000)],
+      loanTerm:['', [Validators.required, NumberSizeValidator.minValue(36), NumberSizeValidator.maxValue(360)]],
       children:['', [Validators.required, SelectorValidators.mustBeSelected]],
       coapplicant:['',  [Validators.required, SelectorValidators.mustBeSelected]],
     })
