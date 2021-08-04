@@ -7,17 +7,16 @@ import { AppComponent } from './app.component';
 import { LoanFormComponent } from './loan-form/loan-form.component';
 import { TermPipe } from './pipes/term.pipe';
 
-import { registerLocaleData } from '@angular/common';
-import localeLt from '@angular/common/locales/lt';
 import { FormatedCurrencyPipe } from './pipes/formated-currency.pipe';
 import { NumberDirective } from './directives/number.directive';
-registerLocaleData(localeLt);
+import { CurrencyDirective } from './directives/currency.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoanFormComponent,
     NumberDirective,
+    CurrencyDirective,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +27,6 @@ registerLocaleData(localeLt);
   providers: [
     TermPipe,
     FormatedCurrencyPipe,
-    { provide: LOCALE_ID, useValue: 'lt'},
   ],
   bootstrap: [AppComponent]
 })
