@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoanCalculatorBackend } from '../services/loan-calculator-backend.service';
 import { SelectorValidators } from './selector.validators';
-import { NumberSizeValidator } from './number-size.validator';
+import { NumberValidator } from './number.validator';
 
 
 @Component({
@@ -18,9 +18,9 @@ export class LoanFormComponent implements OnInit {
 
   constructor(private backend : LoanCalculatorBackend, fb : FormBuilder) {
     this.loanForm = fb.group({
-      monthlyIncome:['', [Validators.required, NumberSizeValidator.minValue(500000)]],
-      requestedAmount:['', [Validators.required, NumberSizeValidator.minValue(20000000)]],
-      loanTerm:['', [Validators.required, NumberSizeValidator.minValue(36), NumberSizeValidator.maxValue(360)]],
+      monthlyIncome:['', [Validators.required, NumberValidator.minValue(500000), NumberValidator.isNumber]],
+      requestedAmount:['', [Validators.required, NumberValidator.minValue(20000000), NumberValidator.isNumber]],
+      loanTerm:['', [Validators.required, NumberValidator.minValue(36), NumberValidator.maxValue(360), NumberValidator.isNumber]],
       children:['', [Validators.required, SelectorValidators.mustBeSelected]],
       coapplicant:['',  [Validators.required, SelectorValidators.mustBeSelected]],
     })
@@ -32,7 +32,11 @@ export class LoanFormComponent implements OnInit {
   }
 
   submit(){
-    console.log(this.loanForm);
+    if(this.loanForm.valid){
+      let data = new FormData();
+      //data.append("monthlyIncome", )
+      this.backend.calculateLoan(this.loanForm.value);
+    }
   }
 
   get monthlyIncome(){

@@ -1,6 +1,7 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,6 +11,7 @@ import { TermPipe } from './pipes/term.pipe';
 import { FormatedCurrencyPipe } from './pipes/formated-currency.pipe';
 import { NumberDirective } from './directives/number.directive';
 import { CurrencyDirective } from './directives/currency.directive';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { CurrencyDirective } from './directives/currency.directive';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [
     TermPipe,
