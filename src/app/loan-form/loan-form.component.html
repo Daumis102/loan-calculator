@@ -24,7 +24,7 @@
 
     <div class="form-group">
         <label for="loanTerm">Term</label>
-        <input formControlName="loanTerm" loanNumber (keypress)="checkIfNumber($event)" id="loanTerm" type="text" class="form-control">
+        <input formControlName="loanTerm" loanNumber id="loanTerm" type="text" class="form-control">
         <div *ngIf="loanTerm?.touched && loanTerm?.invalid" class="alert alert-danger">
             <div *ngIf="loanTerm?.errors?.required">Please specify the loan term.</div>
         </div>

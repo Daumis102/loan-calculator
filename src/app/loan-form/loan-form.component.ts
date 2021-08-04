@@ -34,28 +34,6 @@ export class LoanFormComponent implements OnInit {
     console.log(this.loanForm);
   }
 
-  // onRequestedAmountBlur(){
-  //   this.formatCurrencyInput(this.requestedAmount);
-  // }
-
-  // onMonthlyIncomeBlur(){
-  //   this.formatCurrencyInput(this.monthlyIncome);
-  // }
-
-  // onLoanTermChange(){
-  //   this.removeNonDigitsFromInput(this.loanTerm);
-  // }
-
-  checkIfNumber(event: KeyboardEvent) {
-    const pattern = /[0-9]/;
-    const inputChar = event.key;
-    console.log(event.key);
-    if (!pattern.test(inputChar)) {    
-        // invalid character, prevent input
-        event.preventDefault();
-    }
-}
-
   get monthlyIncome(){
     return this.loanForm.get('monthlyIncome') as FormControl;
   }
@@ -75,13 +53,4 @@ export class LoanFormComponent implements OnInit {
   get coapplicant(){
     return this.loanForm.get('coapplicant') as FormControl;
   }
-
-  // private formatCurrencyInput(input : FormControl){
-  //   input.setValue(this.formatedCurrencyPipe.transform(input.value))
-  // } 
-
-  private removeNonDigitsFromInput(input : FormControl){
-    input.setValue((input.value as string).replace(/\D/g,''), {"emitEvent":false});
-  }
-
 }
