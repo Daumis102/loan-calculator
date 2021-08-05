@@ -1,5 +1,3 @@
-<!-- Should find custom validation here: https://github.com/Daumis102/AngularCourse/blob/0863d582280d8dfc0ea03eb4df28153ca48dbe62/hello-world/src/app/signup-form/signup-form.component.html -->
-
 <form [formGroup]="loanForm" (ngSubmit)="submit()">
 
     <div class="form-group">
@@ -60,5 +58,4 @@
     </div>
 
     <button [disabled]="loanForm?.invalid" class="btn btn-primary" type="submit">Submit</button>
-    <!-- <button class="btn btn-primary" type="submit">Submit</button> -->
 </form>
