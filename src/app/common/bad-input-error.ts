@@ -1,8 +1,12 @@
 import { AppError } from "./app-error";
 
 export class BadInputError extends AppError {
-    get badInputs(){
-        console.log("badInputs ", this.originalError.error.fields);
+    get badInputs(): BadInput[]{
         return this.originalError.error.fields
     } 
 }
+
+interface BadInput{
+    params : string,
+    message : string
+  }

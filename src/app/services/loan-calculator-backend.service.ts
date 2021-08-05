@@ -6,6 +6,7 @@ import { environment } from "../../environments/environment";
 import { AppError } from './../common/app-error';
 import { NotFoundError } from './../common/not-found-error';
 import { BadInputError } from './../common/bad-input-error';
+import { Observable } from 'rxjs';
 
 
 @Injectable({
@@ -13,11 +14,11 @@ import { BadInputError } from './../common/bad-input-error';
 })
 export class LoanCalculatorBackend {
 
-  private apiUrl = '/loanCalculatorApi';
+  private apiUrl: string = '/loanCalculatorApi';
   constructor(private http: HttpClient) { }
 
-  calculateLoan(loanData : object) {
-    let apiKey = environment.apiKey;
+  calculateLoan(loanData : object): Observable<Object> {
+    let apiKey: string = environment.apiKey;
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
       "X-API-KEY" : apiKey,
@@ -55,7 +56,7 @@ export class LoanCalculatorBackend {
     return childrenOptions;
   }
 
-  private errorHandler(error: HttpErrorResponse) {
+  private errorHandler(error: HttpErrorResponse): Observable<never> {
     if (error.status === 404)
       return throwError(new NotFoundError());
 

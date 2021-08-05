@@ -15,7 +15,6 @@ export class NumberValidator{
     static minValue(min: number) : ValidatorFn {
         return (control: AbstractControl) : ValidationErrors | null => {
             let pipe = new ClearCurrencyFormattingPipe();
-            console.log("too small: ", pipe.transform(control.value));
             return parseFloat(pipe.transform(control.value)) < min ?
                  {minValue: {"minValue" : min}} : null;
         
@@ -23,7 +22,6 @@ export class NumberValidator{
     }
 
     static isNumber(control: AbstractControl) : ValidationErrors | null {
-        console.log(/^(\d|\s)+((,|\.)[0-9]{2})?$/.test("11111111.11"))
         if(/^(\d|\s)+((,|\.)[0-9]{2})?$/.test(control.value)){
             return null;
         }

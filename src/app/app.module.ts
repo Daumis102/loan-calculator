@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TermPipe } from './pipes/term.pipe';
 
 import { FormatedCurrencyPipe } from './pipes/formated-currency.pipe';
 import { NumberDirective } from './directives/number.directive';
@@ -32,7 +31,6 @@ import { ClearCurrencyFormattingPipe } from './pipes/clear-currency-formatting.p
     HttpClientModule,
   ],
   providers: [
-    TermPipe,
     FormatedCurrencyPipe,
     { provide: ErrorHandler, useClass: AppErrorHandler },
   ],

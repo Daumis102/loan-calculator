@@ -4,6 +4,7 @@ import { LoanCalculatorBackend } from '../services/loan-calculator-backend.servi
 import { NumberValidator } from './number.validator';
 import { AppError } from '../common/app-error';
 import { BadInputError } from '../common/bad-input-error';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'loan-form',
@@ -32,18 +33,16 @@ export class LoanFormComponent implements OnInit {
     this.childrenOptions = this.backend.getChildrenOptions();
   }
 
-  submit(){
+  submit(): void{
     if(this.loanForm.valid){
       // Convert fields to number
       this.backend.calculateLoan(this.loanForm.value).subscribe(
         response => {
           alert("Success! Spend your loan well :)");
-          console.log(response);
         },
         (error: AppError) => {
           if (error instanceof BadInputError) {
-            error.badInputs.forEach((element: any) => {
-              let badInput: BadInput = element; // integrate to foreach
+            error.badInputs.forEach((badInput: BadInput) => {
               this.loanForm.get(badInput.params)?.setErrors({"serverError" : {"message": badInput.message}});
             });
           } else throw error; 
@@ -52,26 +51,33 @@ export class LoanFormComponent implements OnInit {
     }
   }
 
-  get monthlyIncome(){
+  get monthlyIncome(): FormControl{
     return this.loanForm.get('monthlyIncome') as FormControl;
   }
 
-  get requestedAmount(){
+  get requestedAmount(): FormControl{
     return this.loanForm.get('requestedAmount') as FormControl;
   }
 
-  get loanTerm(){
+  get loanTerm(): FormControl{
     return this.loanForm.get('loanTerm') as FormControl;
   }
 
-  get children(){
+  get children(): FormControl{
     return this.loanForm.get('children') as FormControl;
   }
 
-  get coapplicant(){
+  get coapplicant(): FormControl{
     return this.loanForm.get('coapplicant') as FormControl;
   }
+
+  // Used to preserve the original order of enums when displaying in the selector
+  originalOrder = (a: KeyValue<number, string>, b: KeyValue<number, string>): number => {
+    return 0;
+  }; 
 }
+
+
 
 interface BadInput{
   params : string,
