@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LoanCalculatorBackend } from '../services/loan-calculator-backend.service';
-import { SelectorValidators } from './selector.validators';
 import { NumberValidator } from './number.validator';
 import { AppError } from '../common/app-error';
 import { BadInputError } from '../common/bad-input-error';
-import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'loan-form',
@@ -24,8 +22,8 @@ export class LoanFormComponent implements OnInit {
       monthlyIncome:['', [Validators.required, NumberValidator.minValue(500000), NumberValidator.isNumber]],
       requestedAmount:['', [Validators.required, NumberValidator.minValue(20000000), NumberValidator.isNumber]],
       loanTerm:['', [Validators.required, NumberValidator.minValue(36), NumberValidator.maxValue(360), NumberValidator.isNumber]],
-      children:['', [Validators.required, SelectorValidators.mustBeSelected]],
-      coapplicant:['',  [Validators.required, SelectorValidators.mustBeSelected]],
+      children:['', Validators.required],
+      coapplicant:['',  Validators.required],
     })
   }
   
