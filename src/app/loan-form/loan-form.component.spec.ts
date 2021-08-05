@@ -21,7 +21,7 @@ describe('LoanFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoanFormComponent, CurrencyDirective, NumberDirective ],
+      declarations: [ LoanFormComponent, CurrencyDirective, NumberDirective, FormatedCurrencyPipe ],
       imports: [ ReactiveFormsModule, HttpClientModule ],
       providers: [ FormatedCurrencyPipe ]
     })

@@ -1,5 +1,6 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { ClearCurrencyFormattingPipe } from './clear-currency-formatting.pipe';
 
 
 @Pipe({
@@ -7,14 +8,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatedCurrencyPipe implements PipeTransform{
 
-  transform(value: any, ...args: unknown[]): unknown {
-    let withoutSpaces = value.toString().replace(/\s/g, "");
-    let num = parseFloat(withoutSpaces);
+  transform(value: string | number, ...args: unknown[]): string {
+    if(typeof value === "number") 
+      value = value.toString();
+    const clearingPipe = new ClearCurrencyFormattingPipe();
+    const cleared : string = clearingPipe.transform(value);
+    const num : number = parseFloat(cleared);
     if(isNaN(num)){
       return "";
     } else {
-      let rounded = num.toFixed(2).toString();
-      let withSpaces = rounded.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+      const rounded: string = num.toFixed(2).toString();
+      const withSpaces: string = rounded.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
       return withSpaces;
     }
 

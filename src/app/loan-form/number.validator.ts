@@ -6,7 +6,7 @@ export class NumberValidator{
     static maxValue(max: number) : ValidatorFn {
         return (control: AbstractControl) : ValidationErrors | null => {
             let pipe = new ClearCurrencyFormattingPipe();
-            return pipe.transform(control.value) > max ?
+            return parseFloat(pipe.transform(control.value)) > max ?
                  {maxValue: {"maxValue" : max}} : null;
         
         }
@@ -15,7 +15,8 @@ export class NumberValidator{
     static minValue(min: number) : ValidatorFn {
         return (control: AbstractControl) : ValidationErrors | null => {
             let pipe = new ClearCurrencyFormattingPipe();
-            return pipe.transform(control.value) < min ?
+            console.log("too small: ", pipe.transform(control.value));
+            return parseFloat(pipe.transform(control.value)) < min ?
                  {minValue: {"minValue" : min}} : null;
         
         }
