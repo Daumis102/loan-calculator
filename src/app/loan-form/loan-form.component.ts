@@ -36,7 +36,7 @@ export class LoanFormComponent implements OnInit {
 
   submit(){
     if(this.loanForm.valid){
-      // this.loanForm.get("requestedAmount")?.setValue(5000000);
+      // Convert fields to number
       this.backend.calculateLoan(this.loanForm.value).subscribe(
         response => {
           alert("Success! Spend your loan well :)");
