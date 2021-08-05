@@ -1,9 +1,9 @@
 import { FormatedCurrencyPipe } from './../pipes/formated-currency.pipe';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NumberDirective } from './../directives/number.directive';
 import { CurrencyDirective } from './../directives/currency.directive';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DebugElement, ElementRef } from '@angular/core';
+import { AbstractControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LoanFormComponent } from './loan-form.component';
@@ -93,22 +93,6 @@ describe('LoanFormComponent', () => {
   it('submit button should be dissabled  when form invalid', () => {
     const btn = fixture.debugElement.nativeElement.querySelector('button')
     expect(btn.disabled).toBeTruthy();
-    // expect(form.valid).toBeFalsy();
-
-    // monthlyIncomeInput?.setValue("1000000");
-    // expect(form.valid).toBeFalsy();
-
-    // requestedAmountInput?.setValue("30000000");
-    // expect(form.valid).toBeFalsy();
-
-    // loanTermInput?.setValue("40");
-    // expect(form.valid).toBeFalsy();
-
-    // childrenInput?.setValue("NONE");
-    // expect(form.valid).toBeFalsy();
-
-    // coapplicantInput?.setValue("NONE");
-    // expect(form.valid).toBeTruthy();;
 
   });
 
@@ -126,12 +110,77 @@ describe('LoanFormComponent', () => {
 
   });
 
-  it('should show alert when requestedAmount invalid', () => {
+  it('should show alert when requestedAmount is invalid', () => {
     requestedAmountInput?.setValue("0");
     requestedAmountInput?.markAsTouched();
     fixture.detectChanges();
-    const alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    let alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+
+    requestedAmountInput?.setValue("");
+    requestedAmountInput?.markAsTouched();
+    fixture.detectChanges();
+    alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+
+    requestedAmountInput?.setValue("-1");
+    requestedAmountInput?.markAsTouched();
+    fixture.detectChanges();
+    alert = fixture.debugElement.nativeElement.querySelector('.alert');
     expect(alert).toBeTruthy();
   });
 
+  it('should show alert when monthlyIncome is invalid', () => {
+    monthlyIncomeInput?.setValue("499999");
+    monthlyIncomeInput?.markAsTouched();
+    fixture.detectChanges();
+    let alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+
+    monthlyIncomeInput?.setValue("");
+    monthlyIncomeInput?.markAsTouched();
+    fixture.detectChanges();
+    alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+
+    monthlyIncomeInput?.setValue("-1");
+    monthlyIncomeInput?.markAsTouched();
+    fixture.detectChanges();
+    alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+  });
+
+  it('should show alert when loanTerm is invalid', () => {
+    loanTermInput?.setValue("35");
+    loanTermInput?.markAsTouched();
+    fixture.detectChanges();
+    let alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+
+    loanTermInput?.setValue("");
+    loanTermInput?.markAsTouched();
+    fixture.detectChanges();
+    alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+
+    loanTermInput?.setValue("361");
+    loanTermInput?.markAsTouched();
+    fixture.detectChanges();
+    alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+
+    loanTermInput?.setValue("-1");
+    loanTermInput?.markAsTouched();
+    fixture.detectChanges();
+    alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    expect(alert).toBeTruthy();
+  });
+
+  it('should return correct AbstractControl when using getters', () => {
+    expect(component.children === childrenInput).toBeTruthy();
+    expect(component.coapplicant === coapplicantInput).toBeTruthy();
+    expect(component.loanTerm === loanTermInput).toBeTruthy();
+    expect(component.requestedAmount === requestedAmountInput).toBeTruthy();
+    expect(component.monthlyIncome === monthlyIncomeInput).toBeTruthy();
+  });
 });
