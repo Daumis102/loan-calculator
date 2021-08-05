@@ -8,8 +8,8 @@
 
         <div *ngIf="monthlyIncome?.touched && monthlyIncome?.invalid" class="alert alert-danger">
             <div *ngIf="monthlyIncome?.errors?.required">Please specify the monthly income.</div>
-            <div *ngIf="monthlyIncome?.errors?.min">Monthly income is too small. Minimum monthly income should be {{ monthlyIncome?.errors?.min.min  | formatedCurrency}}.</div>
-            <div *ngIf="monthlyIncome?.errors?.pattern">Can only contain digits and the following symbols: "," "."</div>
+            <div *ngIf="monthlyIncome?.errors?.minValue">Monthly income is too small. Minimum monthly income should be {{ monthlyIncome?.errors?.minValue.minValue  | formatedCurrency}}.</div>
+            <div *ngIf="monthlyIncome?.errors?.isNumber">Can only contain digits and the following symbols: "," "."</div>
             <div *ngIf="monthlyIncome?.errors?.serverError">{{ monthlyIncome?.errors?.serverError.message }}</div>
         </div>
     </div>
@@ -19,8 +19,8 @@
         <input formControlName="requestedAmount" loanNumber loanCurrency id="requestedAmount" type="text" class="form-control">
         <div *ngIf="requestedAmount?.touched && requestedAmount?.invalid" class="alert alert-danger">
             <div *ngIf="requestedAmount?.errors?.required">Please specify the loan amount.</div>
-            <div *ngIf="requestedAmount?.errors?.min">Amount is too small. Minimum loan amount is {{ requestedAmount?.errors?.min.min | formatedCurrency}}.</div>
-            <div *ngIf="requestedAmount?.errors?.pattern">Can only contain digits and the following symbols: "," "."</div>
+            <div *ngIf="requestedAmount?.errors?.minValue">Amount is too small. Minimum loan amount is {{ requestedAmount?.errors?.minValue.minValue | formatedCurrency}}.</div>
+            <div *ngIf="requestedAmount?.errors?.isNumber">Can only contain digits and the following symbols: "," "."</div>
             <div *ngIf="requestedAmount?.errors?.serverError">{{ requestedAmount?.errors?.serverError.message }}</div>
         </div>
     </div>
@@ -30,8 +30,8 @@
         <input formControlName="loanTerm" loanNumber id="loanTerm" type="text" class="form-control">
         <div *ngIf="loanTerm?.touched && loanTerm?.invalid" class="alert alert-danger">
             <div *ngIf="loanTerm?.errors?.required">Please specify the loan term.</div>
-            <div *ngIf="loanTerm?.errors?.min">Term is too short. Minimum term is {{ loanTerm?.errors?.min.min }} months.</div>
-            <div *ngIf="loanTerm?.errors?.max">Term is too long. Maximum term is {{ loanTerm?.errors?.max.max }} months.</div>
+            <div *ngIf="loanTerm?.errors?.minValue">Term is too short. Minimum term is {{ loanTerm?.errors?.minValue.minValue }} months.</div>
+            <div *ngIf="loanTerm?.errors?.maxValue">Term is too long. Maximum term is {{ loanTerm?.errors?.maxValue.maxValue }} months.</div>
             <div *ngIf="loanTerm?.errors?.isNumber">Can only contain digits and the following symbols: "," "."</div>
             <div *ngIf="loanTerm?.errors?.serverError">{{ loanTerm?.errors?.serverError.message }}</div>
         </div>
@@ -43,7 +43,7 @@
             <option *ngFor="let option of childrenOptions | keyvalue" [value]="option.key">{{ option.value }}</option>
         </select>
         <div *ngIf="children?.touched && children?.invalid" class="alert alert-danger">
-            <div *ngIf="children?.errors?.mustBeSelected">Please Specify the number of children</div>
+            <div *ngIf="children?.errors?.required">Please Specify the number of children</div>
             <div *ngIf="children?.errors?.serverError">{{ children?.errors?.serverError.message }}</div>
         </div>
     </div>
@@ -54,7 +54,7 @@
             <option *ngFor="let option of coapplicantOptions | keyvalue" [value]="option.key">{{ option.value }}</option>
         </select>
         <div *ngIf="coapplicant?.touched && coapplicant?.invalid" class="alert alert-danger">
-            <div *ngIf="coapplicant?.errors?.mustBeSelected">Please specify the number of Coapplicants</div>
+            <div *ngIf="coapplicant?.errors?.required">Please specify the number of Coapplicants</div>
             <div *ngIf="coapplicant?.errors?.serverError">{{ coapplicant?.errors?.serverError.message }}</div>
         </div>
     </div>
@@ -64,6 +64,6 @@
     </p>
     
 
-    <button [disabled]="loanForm?.invalid" id="btnSubmit" class="btn btn-primary" type="submit">Submit</button>
+    <button [disabled]="loanForm?.invalid" class="btn btn-primary" type="submit">Submit</button>
     <!-- <button class="btn btn-primary" type="submit">Submit</button> -->
 </form>

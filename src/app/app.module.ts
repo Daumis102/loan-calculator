@@ -12,6 +12,7 @@ import { NumberDirective } from './directives/number.directive';
 import { CurrencyDirective } from './directives/currency.directive';
 import { AppErrorHandler } from './common/app-error-handler';
 import { LoanFormComponent } from './loan-form/loan-form.component';
+import { ClearCurrencyFormattingPipe } from './pipes/clear-currency-formatting.pipe';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { LoanFormComponent } from './loan-form/loan-form.component';
     NumberDirective,
     CurrencyDirective,
     FormatedCurrencyPipe,
+    ClearCurrencyFormattingPipe,
   ],
   imports: [
     BrowserModule,
