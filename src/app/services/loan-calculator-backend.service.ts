@@ -13,19 +13,17 @@ import { BadInputError } from './../common/bad-input-error';
 })
 export class LoanCalculatorBackend {
 
-  private url = 'https://homework.fdp.workers.dev/';
+  private apiUrl = '/loanCalculatorApi';
   constructor(private http: HttpClient) { }
 
   calculateLoan(loanData : object) {
     let apiKey = environment.apiKey;
-
     const headers = new HttpHeaders({
       'Content-type': 'application/json',
-      "X-API-KEY" : "swb-222222",
-      "authorization": "X-API-KEY swb-222222"
+      "X-API-KEY" : apiKey,
     });
     
-    return this.http.post(this.url, JSON.stringify(loanData), {"headers":headers})
+    return this.http.post(this.apiUrl, JSON.stringify(loanData), {"headers":headers})
       .pipe(catchError(this.errorHandler));
   }
 

@@ -13,6 +13,7 @@
             <div *ngIf="monthlyIncome?.errors?.required">Please specify the monthly income.</div>
             <div *ngIf="monthlyIncome?.errors?.minValue">Monthly income is too small. Minimum monthly income should be {{ monthlyIncome?.errors?.minValue.minValue  | formatedCurrency}}.</div>
             <div *ngIf="monthlyIncome?.errors?.isNumber">Can only contain digits and the following symbols: "," "."</div>
+            <div *ngIf="monthlyIncome?.errors?.serverError">{{ monthlyIncome?.errors?.serverError.message }}</div>
         </div>
     </div>
 
@@ -23,6 +24,7 @@
             <div *ngIf="requestedAmount?.errors?.required">Please specify the loan amount.</div>
             <div *ngIf="requestedAmount?.errors?.minValue">Amount is too small. Minimum loan amount is {{ requestedAmount?.errors?.minValue.minValue | formatedCurrency}}.</div>
             <div *ngIf="requestedAmount?.errors?.isNumber">Can only contain digits and the following symbols: "," "."</div>
+            <div *ngIf="requestedAmount?.errors?.serverError">{{ requestedAmount?.errors?.serverError.message }}</div>
         </div>
     </div>
 
@@ -34,6 +36,7 @@
             <div *ngIf="loanTerm?.errors?.minValue">Term is too short. Minimum term is {{ loanTerm?.errors?.minValue.minValue }} months.</div>
             <div *ngIf="loanTerm?.errors?.maxValue">Term is too long. Maximum term is {{ loanTerm?.errors?.maxValue.maxValue }} months.</div>
             <div *ngIf="loanTerm?.errors?.isNumber">Can only contain digits and the following symbols: "," "."</div>
+            <div *ngIf="loanTerm?.errors?.serverError">{{ loanTerm?.errors?.serverError.message }}</div>
         </div>
     </div>
 
@@ -44,6 +47,7 @@
         </select>
         <div *ngIf="children?.touched && children?.invalid" class="alert alert-danger">
             <div *ngIf="children?.errors?.mustBeSelected">Please Specify the number of children</div>
+            <div *ngIf="children?.errors?.serverError">{{ children?.errors?.serverError.message }}</div>
         </div>
     </div>
 
@@ -54,6 +58,7 @@
         </select>
         <div *ngIf="coapplicant?.touched && coapplicant?.invalid" class="alert alert-danger">
             <div *ngIf="coapplicant?.errors?.mustBeSelected">Please specify the number of Coapplicants</div>
+            <div *ngIf="coapplicant?.errors?.serverError">{{ coapplicant?.errors?.serverError.message }}</div>
         </div>
     </div>
 

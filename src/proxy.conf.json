@@ -1,0 +1,11 @@
+{
+    "/loanCalculatorApi": {
+      "target": "https://homework.fdp.workers.dev/",
+      "secure": false,
+      "pathRewrite": {
+        "^/loanCalculatorApi": ""
+      },
+      "changeOrigin": true,
+      "logLevel": "debug"
+    }
+  }

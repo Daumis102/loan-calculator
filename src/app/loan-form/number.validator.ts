@@ -1,6 +1,6 @@
 import {AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
-export class NumberValidator {
+export class NumberValidator{
 
     static maxValue(max: number) : ValidatorFn {
         return (control: AbstractControl) : ValidationErrors | null => {
@@ -24,6 +24,6 @@ export class NumberValidator {
             return null;
         }
         return {isNumber: true};
-    }
-    
+    } 
+
 }

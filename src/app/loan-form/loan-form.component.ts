@@ -5,7 +5,7 @@ import { SelectorValidators } from './selector.validators';
 import { NumberValidator } from './number.validator';
 import { AppError } from '../common/app-error';
 import { BadInputError } from '../common/bad-input-error';
-
+import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'loan-form',
@@ -13,6 +13,7 @@ import { BadInputError } from '../common/bad-input-error';
   styleUrls: ['./loan-form.component.css']
 })
 export class LoanFormComponent implements OnInit {
+
 
   loanForm: FormGroup;
   coapplicantOptions: any;
@@ -35,12 +36,18 @@ export class LoanFormComponent implements OnInit {
 
   submit(){
     if(this.loanForm.valid){
+      // this.loanForm.get("requestedAmount")?.setValue(5000000);
       this.backend.calculateLoan(this.loanForm.value).subscribe(
         response => {
+          alert("Success! Spend your loan well :)");
           console.log(response);
         },
         (error: AppError) => {
           if (error instanceof BadInputError) {
+            error.badInputs.forEach((element: any) => {
+              let badInput: BadInput = element;
+              this.loanForm.get(badInput.params)?.setErrors({"serverError" : {"message": badInput.message}});
+            });
           } else throw error; 
         }
       );
@@ -67,3 +74,9 @@ export class LoanFormComponent implements OnInit {
     return this.loanForm.get('coapplicant') as FormControl;
   }
 }
+
+interface BadInput{
+  params : string,
+  message : string
+}
+
