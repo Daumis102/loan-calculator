@@ -19,13 +19,15 @@ export class LoanFormComponent implements OnInit {
   coapplicantOptions: any;
   childrenOptions: any;
 
+  private numberFormat: string = "^(\d|\s)+((,|\.)[0-9]{2})?$";
+
   constructor(private backend : LoanCalculatorBackend, fb : FormBuilder) {
     this.loanForm = fb.group({
-      monthlyIncome:['', [Validators.required, NumberValidator.minValue(500000), NumberValidator.isNumber]],
-      requestedAmount:['', [Validators.required, NumberValidator.minValue(20000000), NumberValidator.isNumber]],
+      monthlyIncome:['', [Validators.required, Validators.min(500000), Validators.pattern(this.numberFormat)]],
+      requestedAmount:['', [Validators.required, Validators.min(20000000), Validators.pattern(this.numberFormat)]],
       loanTerm:['', [Validators.required, NumberValidator.minValue(36), NumberValidator.maxValue(360), NumberValidator.isNumber]],
-      children:['', [Validators.required, SelectorValidators.mustBeSelected]],
-      coapplicant:['',  [Validators.required, SelectorValidators.mustBeSelected]],
+      children:['', [Validators.required]],
+      coapplicant:['',  [Validators.required]],
     })
   }
   
@@ -45,7 +47,7 @@ export class LoanFormComponent implements OnInit {
         (error: AppError) => {
           if (error instanceof BadInputError) {
             error.badInputs.forEach((element: any) => {
-              let badInput: BadInput = element;
+              let badInput: BadInput = element; // integrate to forEach?
               this.loanForm.get(badInput.params)?.setErrors({"serverError" : {"message": badInput.message}});
             });
           } else throw error; 

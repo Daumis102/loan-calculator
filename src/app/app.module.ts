@@ -5,13 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoanFormComponent } from './loan-form/loan-form.component';
 import { TermPipe } from './pipes/term.pipe';
 
 import { FormatedCurrencyPipe } from './pipes/formated-currency.pipe';
 import { NumberDirective } from './directives/number.directive';
 import { CurrencyDirective } from './directives/currency.directive';
 import { AppErrorHandler } from './common/app-error-handler';
+import { LoanFormComponent } from './loan-form/loan-form.component';
 
 
 @NgModule({
