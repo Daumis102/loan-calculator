@@ -1,8 +1,11 @@
+import { AppError } from './../common/app-error';
+import { LoanCalculatorBackend } from './../services/loan-calculator-backend.service';
 import { FormatedCurrencyPipe } from './../pipes/formated-currency.pipe';
 import { HttpClientModule } from '@angular/common/http';
 import { NumberDirective } from './../directives/number.directive';
 import { CurrencyDirective } from './../directives/currency.directive';
 import { AbstractControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Observable, of, from } from 'rxjs';
 
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -19,11 +22,19 @@ describe('LoanFormComponent', () => {
   let childrenInput: AbstractControl | null;
   let coapplicantInput: AbstractControl | null;
 
+  let backendServiceMock : any;
   beforeEach(async () => {
+    const selectOptions = {"NONE":"None"};
+    backendServiceMock = jasmine.createSpyObj('LoanCalculatorBackend', [
+      'calculateLoan', 'getCoapplicantOptions', 'getChildrenOptions'
+    ]);
+    backendServiceMock.getChildrenOptions.and.returnValue(of(selectOptions))
+    backendServiceMock.getCoapplicantOptions.and.returnValue(of(selectOptions))
+
     await TestBed.configureTestingModule({
       declarations: [ LoanFormComponent, CurrencyDirective, NumberDirective, FormatedCurrencyPipe ],
       imports: [ ReactiveFormsModule, HttpClientModule ],
-      providers: [ FormatedCurrencyPipe ]
+      providers: [ FormatedCurrencyPipe, {provide: LoanCalculatorBackend, useValue: backendServiceMock} ]
     })
     .compileComponents();
   });
@@ -91,13 +102,13 @@ describe('LoanFormComponent', () => {
   });
 
   it('submit button should be dissabled  when form invalid', () => {
-    const btn = fixture.debugElement.nativeElement.querySelector('button')
+    const btn: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector('button')
     expect(btn.disabled).toBeTruthy();
 
   });
 
   it('submit button should not be disabled when form valid', () => {
-    const btn = fixture.debugElement.nativeElement.querySelector('button')
+    const btn: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector('button')
     expect(btn.disabled).toBeTruthy();
 
     monthlyIncomeInput?.setValue("1000000");
@@ -114,7 +125,7 @@ describe('LoanFormComponent', () => {
     requestedAmountInput?.setValue("0");
     requestedAmountInput?.markAsTouched();
     fixture.detectChanges();
-    let alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    let alert: HTMLDivElement = fixture.debugElement.nativeElement.querySelector('.alert');
     expect(alert).toBeTruthy();
 
     requestedAmountInput?.setValue("");
@@ -134,7 +145,7 @@ describe('LoanFormComponent', () => {
     monthlyIncomeInput?.setValue("499999");
     monthlyIncomeInput?.markAsTouched();
     fixture.detectChanges();
-    let alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    let alert: HTMLDivElement = fixture.debugElement.nativeElement.querySelector('.alert');
     expect(alert).toBeTruthy();
 
     monthlyIncomeInput?.setValue("");
@@ -154,7 +165,7 @@ describe('LoanFormComponent', () => {
     loanTermInput?.setValue("35");
     loanTermInput?.markAsTouched();
     fixture.detectChanges();
-    let alert = fixture.debugElement.nativeElement.querySelector('.alert');
+    let alert: HTMLDivElement = fixture.debugElement.nativeElement.querySelector('.alert');
     expect(alert).toBeTruthy();
 
     loanTermInput?.setValue("");
@@ -182,5 +193,21 @@ describe('LoanFormComponent', () => {
     expect(component.loanTerm === loanTermInput).toBeTruthy();
     expect(component.requestedAmount === requestedAmountInput).toBeTruthy();
     expect(component.monthlyIncome === monthlyIncomeInput).toBeTruthy();
+  });
+
+  it('should call calculateLoan', () => {
+    backendServiceMock.calculateLoan.and.callFake(() => {
+      return from([{"response":{}}]);
+    })
+
+    monthlyIncomeInput?.setValue("1000000");
+    requestedAmountInput?.setValue("30000000");
+    loanTermInput?.setValue("40");
+    childrenInput?.setValue("NONE");
+    coapplicantInput?.setValue("NONE");
+
+    component.submit();
+
+    expect(backendServiceMock.calculateLoan).toHaveBeenCalled();
   });
 });
