@@ -1,7 +1,7 @@
 <form [formGroup]="loanForm" (ngSubmit)="submit()">
 
     <div class="form-group">
-        <label for="monthlyIncome">Monthly Income</label>
+        <label for="monthlyIncome">Monthly Income (EUR)*</label>
         <input formControlName="monthlyIncome" loanNumber loanCurrency id="monthlyIncome" type="text" class="form-control"/>
 
         <div *ngIf="monthlyIncome?.touched && monthlyIncome?.invalid" class="alert alert-danger">
@@ -13,7 +13,7 @@
     </div>
 
     <div class="form-group">
-        <label for="requestedAmount">Amount</label>
+        <label for="requestedAmount">Loan Amount (EUR)*</label>
         <input formControlName="requestedAmount" loanNumber loanCurrency id="requestedAmount" type="text" class="form-control"/>
         <div *ngIf="requestedAmount?.touched && requestedAmount?.invalid" class="alert alert-danger">
             <div *ngIf="requestedAmount?.errors?.required">Please specify the loan amount.</div>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="form-group">
-        <label for="loanTerm">Term</label>
+        <label for="loanTerm">Term (Months)*</label>
         <input formControlName="loanTerm" loanNumber id="loanTerm" type="text" class="form-control"/>
         <div *ngIf="loanTerm?.touched && loanTerm?.invalid" class="alert alert-danger">
             <div *ngIf="loanTerm?.errors?.required">Please specify the loan term.</div>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="form-group">
-        <label for="children">Number of children</label>
+        <label for="children">Number of children*</label>
         <select formControlName="children" name="children" id="children" class="form-control">
             <option *ngFor="let option of childrenOptions | keyvalue: originalOrder" [value]="option.key">{{ option.value }}</option>
         </select>
@@ -47,7 +47,7 @@
     </div>
 
     <div class="form-group">
-        <label for="coapplicant">Coapplicant</label>
+        <label for="coapplicant">Coapplicant*</label>
         <select formControlName="coapplicant" name="coapplicant" id="coaplicant" class="form-control">
             <option *ngFor="let option of coapplicantOptions | keyvalue: originalOrder" [value]="option.key">{{ option.value }}</option>
         </select>
